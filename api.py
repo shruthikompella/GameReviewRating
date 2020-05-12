@@ -3,7 +3,6 @@ from flask import Flask,render_template,url_for,flash,redirect
 from forms import RatingForm
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk import word_tokenize
-from nltk.stem import PorterStemmer
 import re
 import numpy as np
 import pickle
@@ -39,13 +38,13 @@ def home():
         review = re.sub(clean,'',review)
         review = re.sub(r"""[,.;@#?!&$]+\ *"""," ",review, flags=re.VERBOSE)
         review = review.replace('\r\n', '-').replace('\n', ' ')
-        review = [word for word in word_tokenize(review) if word.isalpha()]
+        review = [word for word in review.split() if word.isalpha()]
         STOPWORDS= set(["a","about","above","after","again","against","am","an","and","any","are","as","at","be","been","before","being","below","between","both","by","can","could","did","do","does","doing","down","during","each","few","for","from","further","had","has","have","having","he","he'd","he'll","he's","her","here","here's","hers","herself","him","himself","his","how","how's","i","i'd","i'll","i'm","i've","in","into","is","isn't","it","it's","its","itself","let's","me","more","myself","of","off","on","once","only","or","other","ought","our","ours" ,"ourselves","out","over","own","same","she","she'd","she'll","she's","should","so","some","such","than","that","that's","the","their","theirs","them","hemselves","then","there","there's","these","they","they'd","they'll","they're","they've","this","those","through","to","too","under","until","up","very","was","we","we'd","we'll","we're","we've","were","what","what's","when","when's","where","where's","which","while","who","who's","whom","why","why's","with","would","you","you'd","you'll","you're","you've","your","yours","yourself","yourselves","return","hes","heres","hows","im","its","lets","shes","thats","theres","theyll","theyre","theyve","were","whats","whens","wheres","whos","whys","youd","youll","youre","youve"])
         STOPWORDS_dict = dict.fromkeys(STOPWORDS, 0)
         review = [word for word in review if word not in STOPWORDS_dict]
         review = ' '.join(word for word in review)
-        porter=PorterStemmer()
-        review = ' '.join([porter.stem(word) for word in review.split()])
+        # porter=PorterStemmer()
+        # review = ' '.join([porter.stem(word) for word in review.split()])
         vocab = open('models/Vocab.pickle', 'rb')      
         vocab_pickled = pickle.load(vocab) 
         vectorizer = TfidfVectorizer(vocabulary=vocab_pickled.vocabulary_)
