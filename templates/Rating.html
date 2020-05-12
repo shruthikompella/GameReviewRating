@@ -7,10 +7,13 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        
+        <link rel="stylesheet" type='text/css' href="static/main.css">
     </head>
     <body>
-        
+        <!-- <div style="text-align: center;">
+        <div style="width: 500px;background-color: grey;text-align: center;display: inline-block;margin-top: 200px;"> -->
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
         <h1>Your Rating Here</h1>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -23,5 +26,7 @@
             {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
+    </div>
+</div>
     </body>
 </html>
